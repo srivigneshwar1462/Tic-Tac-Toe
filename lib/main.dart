@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_tic_tac_toe/utils/utils.dart';
 
 void main() => runApp(MaterialApp(
       home: GamePage(),
@@ -12,12 +13,37 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  bool player=true;
-  List<String> data=['','','','','','','','',''];
+  bool player;
+  int timesPressed;
+  List<GameButton> buttonsList;
+
+  List<GameButton> doInit() {
+    player = true;
+    timesPressed = 0;
+    List<GameButton> temp = <GameButton>[
+      GameButton(id: 1),
+      GameButton(id: 2),
+      GameButton(id: 3),
+      GameButton(id: 4),
+      GameButton(id: 5),
+      GameButton(id: 6),
+      GameButton(id: 7),
+      GameButton(id: 8),
+      GameButton(id: 9),
+    ];
+    return temp;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    buttonsList = doInit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: appBackGround,
       body: Column(
         children: [
           SizedBox(height: 30),
@@ -36,16 +62,19 @@ class _GamePageState extends State<GamePage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.grey[800].withOpacity(0.8)),
+                            color: buttonsList[index].backGround,
+                            border:
+                                Border.all(color: buttonsList[index].fontColor),
                             borderRadius: BorderRadius.circular(10)),
                         margin: EdgeInsets.all(3),
                         padding: EdgeInsets.all(5),
                         child: Center(
-                          child: Text(data[index],style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.grey
-                          ),),
+                          child: Text(
+                            buttonsList[index].text,
+                            style: TextStyle(
+                                fontSize: 50,
+                                color: buttonsList[index].fontColor),
+                          ),
                         ),
                         // color: Colors.grey[800],
                       ),
@@ -59,9 +88,15 @@ class _GamePageState extends State<GamePage> {
   }
 
   void _tapped(int index) {
-    setState(() {
-      data[index]=player?'x':'o';
-      player=!player;
-    });
+    if (buttonsList[index].text == '') {
+      setState(() {
+        buttonsList[index].text = player ? 'x' : 'o';
+        // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
+        player = !player;
+        timesPressed += 1;
+
+      });
+
+    }
   }
 }
