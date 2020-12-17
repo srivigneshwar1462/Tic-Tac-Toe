@@ -32,10 +32,15 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-
       backgroundColor: appBackGround,
-      title: Text(this.title,style: dialogStyle,),
-      content: Text(this.content,style: dialogStyle,),
+      title: Text(
+        this.title,
+        style: dialogStyle,
+      ),
+      content: Text(
+        this.content,
+        style: dialogStyle,
+      ),
       actions: [
         Column(
           children: [
@@ -43,7 +48,7 @@ class CustomDialog extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: SizedBox(
                 width: double.maxFinite,
-                child: RaisedButton(
+                child: FlatButton(
                   onPressed: callback,
                   color: Color(0xff525252),
                   child: Text(
