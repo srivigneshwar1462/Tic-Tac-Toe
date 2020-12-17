@@ -16,7 +16,7 @@ class GameButton {
 
 const appBackGround = Color(0xFF212121);
 
-TextStyle dialogStyle = TextStyle(
+TextStyle customFontStyle = TextStyle(
   fontSize: 20,
   color: Colors.white,
   letterSpacing: 1.2,
@@ -31,37 +31,40 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: appBackGround,
-      title: Text(
-        this.title,
-        style: dialogStyle,
-      ),
-      content: Text(
-        this.content,
-        style: dialogStyle,
-      ),
-      actions: [
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: SizedBox(
-                width: double.maxFinite,
-                child: FlatButton(
-                  onPressed: callback,
-                  color: Color(0xff525252),
-                  child: Text(
-                    actionText,
-                    style: dialogStyle,
+    return WillPopScope(
+      onWillPop: ()async=>false,
+      child: AlertDialog(
+        backgroundColor: appBackGround,
+        title: Text(
+          this.title,
+          style: customFontStyle,
+        ),
+        content: Text(
+          this.content,
+          style: customFontStyle,
+        ),
+        actions: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: FlatButton(
+                    onPressed: callback,
+                    color: Color(0xff525252),
+                    child: Text(
+                      actionText,
+                      style: customFontStyle,
+                    ),
+                    padding: EdgeInsets.all(10),
                   ),
-                  padding: EdgeInsets.all(10),
                 ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }
