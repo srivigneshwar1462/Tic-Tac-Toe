@@ -45,8 +45,8 @@ class _GamePageState extends State<GamePage> {
     return Scaffold(
       backgroundColor: appBackGround,
       body: Column(
+        // mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SizedBox(height: 30),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -82,6 +82,24 @@ class _GamePageState extends State<GamePage> {
                   }),
             ),
           ),
+          Container(
+            width: double.infinity,
+            height: 80,
+            padding: EdgeInsets.all(15),
+            child: RaisedButton(
+                onPressed: resetGame,
+                child: Center(
+
+                  child: Text(
+                    "Reset",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: appBackGround,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                )),
+          )
         ],
       ),
     );
@@ -132,11 +150,11 @@ class _GamePageState extends State<GamePage> {
       showDialog(
           barrierDismissible: false,
           context: context,
-          builder: (context) => CustomDialog("Winner is ${buttonsList[1].text}",
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
               "Press The Button To Restart", resetGame));
       return winner;
     }
-
+    // Row 2
     if (buttonsList[3].text == buttonsList[4].text &&
         buttonsList[3].text == buttonsList[5].text &&
         buttonsList[3].text != '') {
@@ -148,7 +166,108 @@ class _GamePageState extends State<GamePage> {
       showDialog(
           barrierDismissible: false,
           context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[3].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+    // Row 3
+    if (buttonsList[6].text == buttonsList[7].text &&
+        buttonsList[6].text == buttonsList[8].text &&
+        buttonsList[6].text != '') {
+      print("Checking Second if");
+      buttonsList[6].fontColor = Colors.green;
+      buttonsList[7].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[6].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    // Column 1
+    if (buttonsList[0].text == buttonsList[3].text &&
+        buttonsList[0].text == buttonsList[6].text &&
+        buttonsList[0].text != '') {
+      print("Checking Second if");
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[3].fontColor = Colors.green;
+      buttonsList[6].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    // Column 2
+    if (buttonsList[1].text == buttonsList[4].text &&
+        buttonsList[1].text == buttonsList[7].text &&
+        buttonsList[1].text != '') {
+      print("Checking Second if");
+      buttonsList[1].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[7].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
           builder: (context) => CustomDialog("Winner is ${buttonsList[1].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    // Column 2
+    if (buttonsList[2].text == buttonsList[5].text &&
+        buttonsList[2].text == buttonsList[8].text &&
+        buttonsList[2].text != '') {
+      print("Checking Second if");
+      buttonsList[2].fontColor = Colors.green;
+      buttonsList[5].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[2].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    // Diagonal 1
+    if (buttonsList[0].text == buttonsList[4].text &&
+        buttonsList[0].text == buttonsList[8].text &&
+        buttonsList[0].text != '') {
+      print("Checking Second if");
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    // Diagonal 2
+    if (buttonsList[2].text == buttonsList[4].text &&
+        buttonsList[2].text == buttonsList[6].text &&
+        buttonsList[2].text != '') {
+      print("Checking Second if");
+      buttonsList[2].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[6].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[2].text}",
               "Press The Button To Restart", resetGame));
       return winner;
     }
