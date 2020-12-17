@@ -21,6 +21,7 @@ class _GamePageState extends State<GamePage> {
     player = true;
     timesPressed = 0;
     List<GameButton> temp = <GameButton>[
+      GameButton(id: 0),
       GameButton(id: 1),
       GameButton(id: 2),
       GameButton(id: 3),
@@ -29,7 +30,6 @@ class _GamePageState extends State<GamePage> {
       GameButton(id: 6),
       GameButton(id: 7),
       GameButton(id: 8),
-      GameButton(id: 9),
     ];
     return temp;
   }
@@ -94,9 +94,65 @@ class _GamePageState extends State<GamePage> {
         // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
         player = !player;
         timesPressed += 1;
-
+        checkWinnerMain();
       });
-
     }
+  }
+
+  void resetGame() {
+    if (Navigator.canPop(context)) Navigator.pop(context);
+    setState(() {
+      buttonsList = doInit();
+    });
+  }
+
+  void checkWinnerMain() {
+    bool hasWinner = checkWinner();
+    print(timesPressed);
+    if (hasWinner == false && timesPressed == 9) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => CustomDialog(
+              "Game Tied", "Press The Button To Restart", resetGame));
+    }
+  }
+
+  bool checkWinner() {
+    bool winner = false;
+    //  row 1
+    if (buttonsList[0].text == buttonsList[1].text &&
+        buttonsList[0].text == buttonsList[2].text &&
+        buttonsList[0].text != '') {
+      print("Checking First if");
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[1].fontColor = Colors.green;
+      buttonsList[2].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[1].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    if (buttonsList[3].text == buttonsList[4].text &&
+        buttonsList[3].text == buttonsList[5].text &&
+        buttonsList[3].text != '') {
+      print("Checking Second if");
+      buttonsList[3].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[5].fontColor = Colors.green;
+      winner = true;
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[1].text}",
+              "Press The Button To Restart", resetGame));
+      return winner;
+    }
+
+    return winner;
   }
 }
