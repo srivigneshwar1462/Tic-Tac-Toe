@@ -14,7 +14,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   bool player;
-  int timesPressed;
+  int timesPressed, playerX, playerO;
   List<GameButton> buttonsList;
 
   List<GameButton> doInit() {
@@ -37,70 +37,124 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
+    playerO = 0;
+    playerX = 0;
     buttonsList = doInit();
   }
+
+  var scoreBoardStyle = TextStyle(
+      color: Colors.grey,
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.2);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBackGround,
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: GridView.builder(
-                  itemCount: 9,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        _tapped(index);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: buttonsList[index].backGround,
-                            border:
-                                Border.all(color: buttonsList[index].fontColor),
-                            borderRadius: BorderRadius.circular(10)),
-                        margin: EdgeInsets.all(3),
-                        padding: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text(
-                            buttonsList[index].text,
-                            style: TextStyle(
-                                fontSize: 50,
-                                color: buttonsList[index].fontColor),
+      body: SafeArea(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+                flex: 2,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Player X",
+                            style: scoreBoardStyle,
                           ),
-                        ),
-                        // color: Colors.grey[800],
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            playerX.toString(),
+                            style: scoreBoardStyle,
+                          )
+                        ],
                       ),
-                    );
-                  }),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 80,
-            padding: EdgeInsets.all(15),
-            child: RaisedButton(
-                onPressed: resetGame,
-                child: Center(
-
-                  child: Text(
-                    "Reset",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: appBackGround,
-                      letterSpacing: 1.2,
-                    ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Player O",
+                            style: scoreBoardStyle,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            playerO.toString(),
+                            style: scoreBoardStyle,
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 )),
-          )
-        ],
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: GridView.builder(
+                    itemCount: 9,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          _tapped(index);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: buttonsList[index].backGround,
+                              border: Border.all(
+                                  color: buttonsList[index].fontColor),
+                              borderRadius: BorderRadius.circular(10)),
+                          margin: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(5),
+                          child: Center(
+                            child: Text(
+                              buttonsList[index].text,
+                              style: TextStyle(
+                                  fontSize: 50,
+                                  color: buttonsList[index].fontColor),
+                            ),
+                          ),
+                          // color: Colors.grey[800],
+                        ),
+                      );
+                    }),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: double.infinity,
+                height: 80,
+                padding: EdgeInsets.all(15),
+                child: RaisedButton(
+                    onPressed: resetGame,
+                    child: Center(
+                      child: Text(
+                        "Reset",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: appBackGround,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    )),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -108,7 +162,7 @@ class _GamePageState extends State<GamePage> {
   void _tapped(int index) {
     if (buttonsList[index].text == '') {
       setState(() {
-        buttonsList[index].text = player ? 'x' : 'o';
+        buttonsList[index].text = player ? 'X' : 'O';
         // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
         player = !player;
         timesPressed += 1;
@@ -126,7 +180,7 @@ class _GamePageState extends State<GamePage> {
 
   void checkWinnerMain() {
     bool hasWinner = checkWinner();
-    print(timesPressed);
+
     if (hasWinner == false && timesPressed == 9) {
       showDialog(
           context: context,
@@ -142,7 +196,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[0].text == buttonsList[1].text &&
         buttonsList[0].text == buttonsList[2].text &&
         buttonsList[0].text != '') {
-      print("Checking First if");
       buttonsList[0].fontColor = Colors.green;
       buttonsList[1].fontColor = Colors.green;
       buttonsList[2].fontColor = Colors.green;
@@ -158,7 +211,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[3].text == buttonsList[4].text &&
         buttonsList[3].text == buttonsList[5].text &&
         buttonsList[3].text != '') {
-      print("Checking Second if");
       buttonsList[3].fontColor = Colors.green;
       buttonsList[4].fontColor = Colors.green;
       buttonsList[5].fontColor = Colors.green;
@@ -174,7 +226,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[6].text == buttonsList[7].text &&
         buttonsList[6].text == buttonsList[8].text &&
         buttonsList[6].text != '') {
-      print("Checking Second if");
       buttonsList[6].fontColor = Colors.green;
       buttonsList[7].fontColor = Colors.green;
       buttonsList[8].fontColor = Colors.green;
@@ -191,7 +242,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[0].text == buttonsList[3].text &&
         buttonsList[0].text == buttonsList[6].text &&
         buttonsList[0].text != '') {
-      print("Checking Second if");
       buttonsList[0].fontColor = Colors.green;
       buttonsList[3].fontColor = Colors.green;
       buttonsList[6].fontColor = Colors.green;
@@ -208,7 +258,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[1].text == buttonsList[4].text &&
         buttonsList[1].text == buttonsList[7].text &&
         buttonsList[1].text != '') {
-      print("Checking Second if");
       buttonsList[1].fontColor = Colors.green;
       buttonsList[4].fontColor = Colors.green;
       buttonsList[7].fontColor = Colors.green;
@@ -225,7 +274,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[2].text == buttonsList[5].text &&
         buttonsList[2].text == buttonsList[8].text &&
         buttonsList[2].text != '') {
-      print("Checking Second if");
       buttonsList[2].fontColor = Colors.green;
       buttonsList[5].fontColor = Colors.green;
       buttonsList[8].fontColor = Colors.green;
@@ -242,7 +290,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[0].text == buttonsList[4].text &&
         buttonsList[0].text == buttonsList[8].text &&
         buttonsList[0].text != '') {
-      print("Checking Second if");
       buttonsList[0].fontColor = Colors.green;
       buttonsList[4].fontColor = Colors.green;
       buttonsList[8].fontColor = Colors.green;
@@ -259,7 +306,6 @@ class _GamePageState extends State<GamePage> {
     if (buttonsList[2].text == buttonsList[4].text &&
         buttonsList[2].text == buttonsList[6].text &&
         buttonsList[2].text != '') {
-      print("Checking Second if");
       buttonsList[2].fontColor = Colors.green;
       buttonsList[4].fontColor = Colors.green;
       buttonsList[6].fontColor = Colors.green;
