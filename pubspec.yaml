@@ -1,5 +1,5 @@
 name: new_tic_tac_toe
-description: A SImple Tic Tac Toe game built using flutter
+description: A Simple Tic Tac Toe game built using flutter
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
