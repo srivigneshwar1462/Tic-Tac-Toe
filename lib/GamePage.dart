@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_tic_tac_toe/utils/utils.dart';
+
 class GamePage extends StatefulWidget {
   @override
   _GamePageState createState() => _GamePageState();
@@ -36,119 +37,162 @@ class _GamePageState extends State<GamePage> {
   }
 
   var scoreBoardStyle = TextStyle(
-      color: Colors.grey,
+      color: Colors.white,
       fontSize: 30,
       fontWeight: FontWeight.bold,
       letterSpacing: 1.2);
 
+  Future<bool> _onBackButton() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: appBackGround,
+              title: Text(
+                "Want To Quit?",
+                style: customFontStyle,
+              ),
+              actions: [
+                FlatButton(
+                    color: Color(0xff525252),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/');
+
+                    },
+                    child: Text(
+                      "Yes",
+                      style: customFontStyle,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "No",
+                      style: customFontStyle,
+                    ),
+                    color: Color(0xff525252),
+                  ),
+                )
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appBackGround,
-      body: SafeArea(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-                flex: 2,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Player X",
-                            style: scoreBoardStyle,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            playerX.toString(),
-                            style: scoreBoardStyle,
-                          )
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Player O",
-                            style: scoreBoardStyle,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            playerO.toString(),
-                            style: scoreBoardStyle,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )),
-            Expanded(
-              flex: 6,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15,left: 5,right: 5),
-                child: GridView.builder(
-                    itemCount: 9,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                    ),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          _tapped(index);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: buttonsList[index].backGround,
-                            border: Border.all(
-                                color: buttonsList[index].fontColor.withOpacity(0.3)),
-                            // borderRadius: BorderRadius.circular(10)
-                          ),
-                          // margin: EdgeInsets.all(3),
-                          // padding: EdgeInsets.all(5),
-                          child: Center(
-                            child: Text(
-                              buttonsList[index].text,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 50,
-                                  color: buttonsList[index].fontColor),
+    return WillPopScope(
+      onWillPop: _onBackButton,
+      child: Scaffold(
+        backgroundColor: appBackGround,
+        body: SafeArea(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Player X",
+                              style: scoreBoardStyle,
                             ),
-                          ),
-                          // color: Colors.grey[800],
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              playerX.toString(),
+                              style: scoreBoardStyle,
+                            )
+                          ],
                         ),
-                      );
-                    }),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: double.infinity,
-                height: 80,
-                padding: EdgeInsets.all(15),
-                child: RaisedButton(
-                    onPressed: resetGame,
-                    child: Center(
-                      child: Text(
-                        "Reset",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: appBackGround,
-                          letterSpacing: 1.2,
-                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Player O",
+                              style: scoreBoardStyle,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              playerO.toString(),
+                              style: scoreBoardStyle,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )),
+              Expanded(
+                flex: 6,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+                  child: GridView.builder(
+                      itemCount: 9,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
                       ),
-                    )),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            _tapped(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: buttonsList[index].backGround,
+                                border: Border.all(
+                                    color: buttonsList[index]
+                                        .fontColor
+                                        .withOpacity(0.3)),
+                                borderRadius: BorderRadius.circular(2)),
+                            margin: EdgeInsets.all(2),
+                            padding: EdgeInsets.all(5),
+                            child: Center(
+                              child: Text(
+                                buttonsList[index].text,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 50,
+                                    color: buttonsList[index].fontColor),
+                              ),
+                            ),
+                            // color: Colors.grey[800],
+                          ),
+                        );
+                      }),
+                ),
               ),
-            )
-          ],
+              Flexible(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  padding: EdgeInsets.all(15),
+                  child: RaisedButton(
+                      onPressed: resetGame,
+                      child: Center(
+                        child: Text(
+                          "Reset",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: appBackGround,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      )),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

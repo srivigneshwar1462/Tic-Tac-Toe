@@ -10,7 +10,7 @@ class GameButton {
   GameButton(
       {this.id,
       this.text = '',
-      this.fontColor = Colors.grey,
+      this.fontColor = Colors.white,
       this.backGround = const Color(0xFF212121)});
 }
 

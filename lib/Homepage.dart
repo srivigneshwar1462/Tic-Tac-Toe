@@ -14,7 +14,8 @@ class HomePage extends StatelessWidget {
         children: [
           Expanded(
             // flex: 1,
-            child: Center(
+            child: Align(
+              alignment: Alignment.bottomCenter,
               child: Text(
                 "Tic Tac Toe",
                 textAlign: TextAlign.center,
@@ -34,14 +35,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Expanded(
-              flex: 2,
+              flex: 3,
               child: AvatarGlow(
                 endRadius: 180,
                 child: Container(
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: CircleAvatar(
                       radius: 70,
-                      backgroundColor: appBackGround,
+                      backgroundColor: Colors.grey[800],
                       child: Image.asset(
                         'lib/images/img.png',
                         width: 100,
@@ -49,22 +50,26 @@ class HomePage extends StatelessWidget {
                 ),
               )),
           Flexible(
+            flex: 2,
             child: FractionallySizedBox(
-              heightFactor: 0.35,
+              heightFactor: 0.3,
               alignment: Alignment.center,
               // padding: EdgeInsets.all(30),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/game');
-                },
-                color: Colors.grey[800],
-                child: Text(
-                  "Start Game",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    letterSpacing: 2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: RaisedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/game');
+                  },
+                  color: Colors.grey[800],
+                  child: Text(
+                    "Start Game",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      letterSpacing: 2,
+                    ),
                   ),
                 ),
               ),
