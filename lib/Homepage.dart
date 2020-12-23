@@ -37,6 +37,7 @@ class HomePage extends StatelessWidget {
           Expanded(
               flex: 3,
               child: AvatarGlow(
+                duration: Duration(seconds: 3),
                 endRadius: 180,
                 child: Container(
                   decoration: BoxDecoration(shape: BoxShape.circle),

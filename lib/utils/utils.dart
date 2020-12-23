@@ -17,7 +17,7 @@ class GameButton {
 const appBackGround = Color(0xFF212121);
 
 TextStyle customFontStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 15,
   color: Colors.white,
   letterSpacing: 1.2,
 );
@@ -32,7 +32,7 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async=>false,
+      onWillPop: () async => false,
       child: AlertDialog(
         backgroundColor: appBackGround,
         title: Text(

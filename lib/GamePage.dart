@@ -182,7 +182,7 @@ class _GamePageState extends State<GamePage> {
                         child: Text(
                           "Reset",
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: appBackGround,
                             letterSpacing: 1.2,
