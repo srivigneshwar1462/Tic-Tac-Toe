@@ -17,7 +17,11 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: appBackGround,
               title: Text(
                 "Want To Quit?",
-                style: customFontStyle,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  letterSpacing: 1.2,
+                ),
               ),
               actions: [
                 FlatButton(
@@ -82,19 +86,27 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                   flex: 2,
                   child: AvatarGlow(
+
+                    glowColor: Colors.white,
+                    endRadius: 120.0,
                     duration: Duration(seconds: 4),
-                    endRadius: 140,
-                    child: Container(
-                      decoration: BoxDecoration(shape: BoxShape.circle),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: Duration(milliseconds: 100),
+                    child: Material(
+                      elevation: 8.0,
+                      shape: CircleBorder(),
                       child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: Colors.grey[800],
-                          child: Image.asset(
-                            'lib/images/img.png',
-                            width: 80,
-                          )),
+                        backgroundColor: Colors.grey[800],
+                        child: Image.asset(
+                          'lib/images/img.png',
+                          height: 50,
+                        ),
+                        radius: 40.0,
+                      ),
                     ),
-                  )),
+                  ),),
+
               Flexible(
                 flex: 2,
                 child: Column(

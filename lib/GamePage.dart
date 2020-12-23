@@ -49,7 +49,11 @@ class _GamePageState extends State<GamePage> {
               backgroundColor: appBackGround,
               title: Text(
                 "Want To Quit?",
-                style: customFontStyle,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  letterSpacing: 1.2,
+                ),
               ),
               actions: [
                 FlatButton(

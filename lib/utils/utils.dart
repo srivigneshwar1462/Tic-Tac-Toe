@@ -37,7 +37,11 @@ class CustomDialog extends StatelessWidget {
         backgroundColor: appBackGround,
         title: Text(
           this.title,
-          style: customFontStyle,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            letterSpacing: 1.2,
+          ),
         ),
         content: Text(
           this.content,
