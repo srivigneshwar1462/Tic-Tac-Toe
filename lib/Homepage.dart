@@ -84,29 +84,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                  flex: 2,
-                  child: AvatarGlow(
-
-                    glowColor: Colors.white,
-                    endRadius: 120.0,
-                    duration: Duration(seconds: 4),
-                    repeat: true,
-                    showTwoGlows: true,
-                    repeatPauseDuration: Duration(milliseconds: 100),
-                    child: Material(
-                      elevation: 8.0,
-                      shape: CircleBorder(),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey[800],
-                        child: Image.asset(
-                          'lib/images/img.png',
-                          height: 50,
-                        ),
-                        radius: 40.0,
+                flex: 2,
+                child: AvatarGlow(
+                  glowColor: Colors.white,
+                  endRadius: 120.0,
+                  duration: Duration(seconds: 4),
+                  repeat: true,
+                  showTwoGlows: true,
+                  repeatPauseDuration: Duration(milliseconds: 100),
+                  child: Material(
+                    elevation: 6.0,
+                    shape: CircleBorder(),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[800],
+                      child: Image.asset(
+                        'lib/images/img.png',
+                        height: 50,
                       ),
+                      radius: 40.0,
                     ),
-                  ),),
-
+                  ),
+                ),
+              ),
               Flexible(
                 flex: 2,
                 child: Column(
@@ -133,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           FractionallySizedBox(
-                            heightFactor: 0.2,
+                            heightFactor: 0.3,
                             alignment: Alignment.center,
                             // padding: EdgeInsets.all(30),
                             child: ClipRRect(
@@ -157,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           FractionallySizedBox(
-                            heightFactor: 0.2,
+                            heightFactor: 0.3,
                             alignment: Alignment.center,
                             // padding: EdgeInsets.all(30),
                             child: ClipRRect(
@@ -185,7 +184,28 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-              )
+              ),
+              Flexible(
+                child: Container(
+                  child: Text(
+                    "@Created by Srivignesh",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        letterSpacing: 2,
+                        // shadows: [
+                        //   Shadow(
+                        //     offset: Offset(6.0, 6.0),
+                        //     blurRadius: 5.0,
+                        //     color: Colors.black,
+                        //   ),
+                        // ]
+                    ),
+                    // style: myNewFontWhite.copyWith(fontSize: 20),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
