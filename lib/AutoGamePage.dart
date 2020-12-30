@@ -1,3 +1,5 @@
+//this page is autogame page
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:new_tic_tac_toe/utils/utils.dart';

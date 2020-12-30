@@ -1,3 +1,5 @@
+// this is the intro page it contains appName and icon and buttons
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,16 +94,30 @@ class _HomePageState extends State<HomePage> {
                   repeat: true,
                   showTwoGlows: true,
                   repeatPauseDuration: Duration(milliseconds: 100),
-                  child: Material(
-                    elevation: 6.0,
-                    shape: CircleBorder(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      // shape: BoxShape.circle,
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //       color: Colors.black54,
+                      //       offset: Offset(4.0, 4.0),
+                      //       blurRadius: 15.0,
+                      //       spreadRadius: 1.0),
+                      //   BoxShadow(
+                      //       color: Colors.grey[800],
+                      //       offset: Offset(-4.0, -4.0),
+                      //       blurRadius: 15.0,
+                      //       spreadRadius: 1.0),
+                      // ],
+                    ),
                     child: CircleAvatar(
-                      backgroundColor: Colors.grey[800],
+                      backgroundColor: appBackGround,
                       child: Image.asset(
                         'lib/images/img.png',
-                        height: 50,
+                        height: 80,
                       ),
-                      radius: 40.0,
+                      radius: 60.0,
                     ),
                   ),
                 ),
@@ -190,17 +206,17 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "@Created by Srivignesh",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                        letterSpacing: 2,
-                        // shadows: [
-                        //   Shadow(
-                        //     offset: Offset(6.0, 6.0),
-                        //     blurRadius: 5.0,
-                        //     color: Colors.black,
-                        //   ),
-                        // ]
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                      letterSpacing: 2,
+                      // shadows: [
+                      //   Shadow(
+                      //     offset: Offset(6.0, 6.0),
+                      //     blurRadius: 5.0,
+                      //     color: Colors.black,
+                      //   ),
+                      // ]
                     ),
                     // style: myNewFontWhite.copyWith(fontSize: 20),
                   ),
@@ -213,3 +229,60 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+//
+// class MyHome extends StatefulWidget {
+//   @override
+//   _MyHomeState createState() => _MyHomeState();
+// }
+//
+// class _MyHomeState extends State<MyHome> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: appBackGround,
+//       body: Center(
+//         child: Container(
+//           width: 200,
+//           height: 200,
+//           child: Icon(Icons.android, size: 60, color: Colors.grey[800]),
+//
+//           decoration: BoxDecoration(
+//               color: appBackGround,
+//               shape: BoxShape.circle,
+//               // boxShadow: [
+//               //   BoxShadow(
+//               //       color: Colors.grey[600],
+//               //       offset: Offset(4.0, 4.0),
+//               //       blurRadius: 15.0,
+//               //       spreadRadius: 1.0),
+//               //   BoxShadow(
+//               //       color: Colors.white,
+//               //       offset: Offset(-4.0, -4.0),
+//               //       blurRadius: 15.0,
+//               //       spreadRadius: 1.0),
+//               // ],
+//
+//               gradient: LinearGradient(
+//                   begin: Alignment.topLeft,
+//                   end: Alignment.bottomRight,
+//                   colors: [
+//                     Colors.grey[700],
+//                     Colors.grey[800],
+//                     Colors.grey[850],
+//                     Colors.grey[900],
+//                   ],
+//                   stops: [
+//                     0.1,
+//                     0.3,
+//                     0.8,
+//                     1
+//                   ]
+//               )
+//
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

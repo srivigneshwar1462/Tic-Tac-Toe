@@ -1,3 +1,5 @@
+// this page contains some utility classes and data that are used throughout this project
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

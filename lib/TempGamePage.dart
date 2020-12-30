@@ -1,56 +1,75 @@
-// import 'package:flutter/material.dart';
-// import 'package:new_tic_tac_toe/utils/utils.dart';
-//
-// class Game {
-//   bool player;
-//   List<GameButton> buttonsList;
-//   int timesPressed, playerX, playerO;
-//
-//   List<GameButton> doInit() {
-//     this.player = true;
-//     this.timesPressed = 0;
-//      return this.buttonsList = [
-//       GameButton(id: 0),
-//       GameButton(id: 1),
-//       GameButton(id: 2),
-//       GameButton(id: 3),
-//       GameButton(id: 4),
-//       GameButton(id: 5),
-//       GameButton(id: 6),
-//       GameButton(id: 7),
-//       GameButton(id: 8),
-//     ];
-//   }
-//
-//   void initializePlayers() {
-//     this.playerX = 0;
-//     this.playerO = 0;
-//   }
-//
-//   List<GameButton> getButtons() => buttonsList;
-//
-//   void onTap(int index, BuildContext context) {
-//     if (this.buttonsList[index].text == "") {
-//       this.buttonsList[index].text = (this.player) ? 'X' : 'O';
-//       this.timesPressed += 1;
-//       this.player = !player;
-//       checkWinner(context);
-//     }
-//   }
-//
-//   void checkWinner(BuildContext context) {
-//     bool hasWinner = checkWinnerMain();
-//     if (hasWinner == false && this.timesPressed == 9) {
-//       showDialog(
-//           context: context,
-//           builder: (context) =>
-//               CustomDialog("Game Tied", "Press the button to restart",resetGame));
-//     }
-//   }
-//
-//   void resetGame() {}
-//
-//   bool checkWinnerMain() {
-//     return false;
-//   }
-// }
+//this page is not used in this project this page contains neumorphic button style for light and dark theme
+
+
+import 'package:flutter/material.dart';
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool darkMode = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 200,
+              height: 200,
+              child: Icon(Icons.android, size: 90, color: darkMode ? Colors.white : Colors.black),
+              decoration: BoxDecoration(
+                  color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: darkMode ? Colors.black54 : Colors.grey[500],
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                    BoxShadow(
+                        color: darkMode ? Colors.grey[800] : Colors.white,
+                        offset: Offset(-4.0, -4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                  ]),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+
+                Padding(
+                  padding: EdgeInsets.only(top: 50, right: 3),
+                  child: FlatButton(
+                    color: Colors.white,
+                    child: Text('Light', style: TextStyle(color: Colors.black),),
+                    onPressed: () {
+                      setState(() {
+                        darkMode = false;
+                      });                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 50, left: 3),
+                  child: FlatButton(
+                    color: Colors.black,
+                    child: Text('Dark', style: TextStyle(color: Colors.white),),
+                    onPressed: () {
+                      setState(() {
+                        darkMode = true;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
