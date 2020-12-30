@@ -1,4 +1,4 @@
-//this page is autogame page
+//this page is autoGame page
 
 import 'dart:math';
 import 'package:flutter/material.dart';
