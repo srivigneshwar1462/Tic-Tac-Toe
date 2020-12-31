@@ -1,6 +1,6 @@
 //this page is autoGame page
 
-import 'dart:math';
+// import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:new_tic_tac_toe/utils/utils.dart';
 
@@ -213,10 +213,13 @@ class _AutoGamePageState extends State<AutoGamePage> {
         timesPressed += 1;
         print(timesPressed);
         if (notPressed.length > 1) {
-          Random random = Random();
-          int num = notPressed[random.nextInt(notPressed.length)];
-          buttonsList[num].text = 'O';
-          notPressed.remove(num);
+          // Random random = Random();
+          // int num = notPressed[random.nextInt(notPressed.length)];
+          // buttonsList[num].text = 'O';
+          // notPressed.remove(num);
+          var move = playAi(buttonsList, notPressed);
+          buttonsList[move].text = 'O';
+          notPressed.remove(buttonsList[move]);
           timesPressed += 1;
         }
         // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
@@ -226,6 +229,30 @@ class _AutoGamePageState extends State<AutoGamePage> {
         checkWinnerMain();
       });
     }
+  }
+
+  int playAi(List<GameButton> buttonsList, List<int> availableSpace) {
+    List<GameButton> tempButtons = new List<GameButton>.from(buttonsList);
+    int niceMove = bestMove(tempButtons,availableSpace);
+    return niceMove;
+  }
+
+  int bestMove(List<GameButton> buttons,List<int> available) {
+    var move = 0;
+    double bestScore=double.negativeInfinity;
+    for (int i = 0; i < available.length; i++) {
+      buttons[available[i]].text='O';
+      var score= miniMax(buttons);
+      if(score>bestScore){
+        bestScore=score;
+        move=available[i];
+      }
+    }
+    return move;
+  }
+
+  miniMax(List<GameButton> buttons){
+    checkWinnerMain();
   }
 
   void resetGame() {
@@ -417,5 +444,180 @@ class _AutoGamePageState extends State<AutoGamePage> {
     }
 
     return winner;
+  }
+  bool checkWinnerAi() {
+    bool hasWinner = false;
+    // var winner='';
+
+    // TODO: implement the logic
+
+    //  row 1
+    if (buttonsList[0].text == buttonsList[1].text &&
+        buttonsList[0].text == buttonsList[2].text &&
+        buttonsList[0].text != '') {
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[1].fontColor = Colors.green;
+      buttonsList[2].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[0].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Row 2
+    if (buttonsList[3].text == buttonsList[4].text &&
+        buttonsList[3].text == buttonsList[5].text &&
+        buttonsList[3].text != '') {
+      buttonsList[3].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[5].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[3].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[3].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+    // Row 3
+    if (buttonsList[6].text == buttonsList[7].text &&
+        buttonsList[6].text == buttonsList[8].text &&
+        buttonsList[6].text != '') {
+      buttonsList[6].fontColor = Colors.green;
+      buttonsList[7].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[6].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[6].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Column 1
+    if (buttonsList[0].text == buttonsList[3].text &&
+        buttonsList[0].text == buttonsList[6].text &&
+        buttonsList[0].text != '') {
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[3].fontColor = Colors.green;
+      buttonsList[6].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[0].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Column 2
+    if (buttonsList[1].text == buttonsList[4].text &&
+        buttonsList[1].text == buttonsList[7].text &&
+        buttonsList[1].text != '') {
+      buttonsList[1].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[7].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[1].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[1].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Column 2
+    if (buttonsList[2].text == buttonsList[5].text &&
+        buttonsList[2].text == buttonsList[8].text &&
+        buttonsList[2].text != '') {
+      buttonsList[2].fontColor = Colors.green;
+      buttonsList[5].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[2].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[2].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Diagonal 1
+    if (buttonsList[0].text == buttonsList[4].text &&
+        buttonsList[0].text == buttonsList[8].text &&
+        buttonsList[0].text != '') {
+      buttonsList[0].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[8].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[0].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[0].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    // Diagonal 2
+    if (buttonsList[2].text == buttonsList[4].text &&
+        buttonsList[2].text == buttonsList[6].text &&
+        buttonsList[2].text != '') {
+      buttonsList[2].fontColor = Colors.green;
+      buttonsList[4].fontColor = Colors.green;
+      buttonsList[6].fontColor = Colors.green;
+      hasWinner = true;
+      if (buttonsList[2].text == 'X') {
+        player += 1;
+      } else {
+        computer += 1;
+      }
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => CustomDialog("Winner is ${buttonsList[2].text}",
+              "Press The Button To Restart", resetGame));
+      return hasWinner;
+    }
+
+    return hasWinner;
   }
 }
