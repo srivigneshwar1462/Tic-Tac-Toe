@@ -13,8 +13,10 @@ class _AutoGamePageState extends State<AutoGamePage> {
   int timesPressed, player, computer;
   List<GameButton> buttonsList;
   List<int> notPressed;
+  List<String> dummyButtons;
 
   List<GameButton> doInit() {
+    dummyButtons = ['', '', '', '', '', '', '', '', ''];
     timesPressed = 0;
     notPressed = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -209,6 +211,7 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[index].text == '') {
       buttonsList[index].text = 'X';
       notPressed.remove(index);
+      dummyButtons[index] = 'X';
       timesPressed += 1;
       // print(timesPressed);
       if (notPressed.length > 1) {
@@ -216,10 +219,11 @@ class _AutoGamePageState extends State<AutoGamePage> {
         // int num = notPressed[random.nextInt(notPressed.length)];
         // buttonsList[num].text = 'O';
         // notPressed.remove(num);
-        var move = playAi(buttonsList);
+        var move = playAi(dummyButtons);
         print(move);
         buttonsList[move].text = 'O';
         notPressed.remove(move);
+        dummyButtons[index] = 'O';
         timesPressed += 1;
       }
       // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
@@ -229,14 +233,14 @@ class _AutoGamePageState extends State<AutoGamePage> {
     setState(() {});
   }
 
-  playAi(List<GameButton> button) {
-    int bestScore = -999;
-    var move = -1;
-    for (int i = 0; i < button.length; i++) {
-      if (button[i].text == '') {
-        button[i].text = 'O';
-        var score = miniMax(button, 0, false);
-        button[i].text = '';
+  playAi(List<String> dummy) {
+    var bestScore = -88;
+    var move = -2;
+    for (int i = 0; i < dummy.length; i++) {
+      if (dummy[i] == '') {
+        dummy[i] = 'O';
+        var score = miniMax(dummy);
+        dummy[i] = '';
         if (score > bestScore) {
           bestScore = score;
           move = i;
@@ -246,39 +250,12 @@ class _AutoGamePageState extends State<AutoGamePage> {
     return move;
   }
 
-  miniMax(List<GameButton> buttons, int depth, bool isMaximising) {
-    var scoreData = {'X': -1, 'O': 1, 'T': 0};
-    var winner = checkWinnerAi();
-    if (winner != '') {
-      return scoreData[winner];
-    }
-    if (isMaximising) {
-      var bestScore = double.negativeInfinity;
-      for (int i = 0; i < buttons.length; i++) {
-        if (buttons[i].text == '') {
-          buttons[i].text = 'O';
-          var score = miniMax(buttons, depth + 1, true);
-          buttons[i].text = '';
-          bestScore = score > bestScore ? score : bestScore;
-        }
-      }
-      return bestScore;
-    } else {
-      var bestScore = double.negativeInfinity;
-      for (int i = 0; i < buttons.length; i++) {
-        if (buttons[i].text == '') {
-          buttons[i].text = 'O';
-          var score = miniMax(buttons, depth + 1, true);
-          buttons[i].text = '';
-          bestScore = score > bestScore ? score : bestScore;
-        }
-      }
-      return bestScore;
-    }
-  }
+  miniMax(List<String> dummy) {}
 
   void resetGame() {
-    if (Navigator.canPop(context)) Navigator.pop(context);
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
     setState(() {
       buttonsList = doInit();
     });
@@ -468,86 +445,89 @@ class _AutoGamePageState extends State<AutoGamePage> {
     return winner;
   }
 
-  String checkWinnerAi() {
+  String checkWinnerAi(List<String> buttonsList) {
     String hasWinner = '';
+    // for(int i =0;i<buttonsList.length;i++){
+    //   print("buttonsList[$i] is ${buttonsList[i].text}");
+    // }
 
     //  row 1
-    if (buttonsList[0].text == buttonsList[1].text &&
-        buttonsList[0].text == buttonsList[2].text &&
-        buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text;
+    if (buttonsList[0] == buttonsList[1] &&
+        buttonsList[0] == buttonsList[2] &&
+        buttonsList[0] != '') {
+      hasWinner = buttonsList[0];
       return hasWinner;
     }
 
     // Row 2
-    if (buttonsList[3].text == buttonsList[4].text &&
-        buttonsList[3].text == buttonsList[5].text &&
-        buttonsList[3].text != '') {
-      hasWinner = buttonsList[3].text;
+    if (buttonsList[3] == buttonsList[4] &&
+        buttonsList[3] == buttonsList[5] &&
+        buttonsList[3] != '') {
+      hasWinner = buttonsList[3];
 
       return hasWinner;
     }
     // Row 3
-    if (buttonsList[6].text == buttonsList[7].text &&
-        buttonsList[6].text == buttonsList[8].text &&
-        buttonsList[6].text != '') {
-      hasWinner = buttonsList[6].text;
+    if (buttonsList[6] == buttonsList[7] &&
+        buttonsList[6] == buttonsList[8] &&
+        buttonsList[6] != '') {
+      hasWinner = buttonsList[6];
 
       return hasWinner;
     }
 
     // Column 1
-    if (buttonsList[0].text == buttonsList[3].text &&
-        buttonsList[0].text == buttonsList[6].text &&
-        buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text;
+    if (buttonsList[0] == buttonsList[3] &&
+        buttonsList[0] == buttonsList[6] &&
+        buttonsList[0] != '') {
+      hasWinner = buttonsList[0];
 
       return hasWinner;
     }
 
     // Column 2
-    if (buttonsList[1].text == buttonsList[4].text &&
-        buttonsList[1].text == buttonsList[7].text &&
-        buttonsList[1].text != '') {
-      hasWinner = buttonsList[1].text;
+    if (buttonsList[1] == buttonsList[4] &&
+        buttonsList[1] == buttonsList[7] &&
+        buttonsList[1] != '') {
+      hasWinner = buttonsList[1];
 
       return hasWinner;
     }
 
     // Column 3
-    if (buttonsList[2].text == buttonsList[5].text &&
-        buttonsList[2].text == buttonsList[8].text &&
-        buttonsList[2].text != '') {
-      hasWinner = buttonsList[2].text;
+    if (buttonsList[2] == buttonsList[5] &&
+        buttonsList[2] == buttonsList[8] &&
+        buttonsList[2] != '') {
+      hasWinner = buttonsList[2];
 
       return hasWinner;
     }
 
     // Diagonal 1
-    if (buttonsList[0].text == buttonsList[4].text &&
-        buttonsList[0].text == buttonsList[8].text &&
-        buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text;
+    if (buttonsList[0] == buttonsList[4] &&
+        buttonsList[0] == buttonsList[8] &&
+        buttonsList[0] != '') {
+      hasWinner = buttonsList[0];
 
       return hasWinner;
     }
 
     // Diagonal 2
-    if (buttonsList[2].text == buttonsList[4].text &&
-        buttonsList[2].text == buttonsList[6].text &&
-        buttonsList[2].text != '') {
-      hasWinner = buttonsList[2].text;
+    if (buttonsList[2] == buttonsList[4] &&
+        buttonsList[2] == buttonsList[6] &&
+        buttonsList[2] != '') {
+      hasWinner = buttonsList[2];
 
       return hasWinner;
     }
 
-    for (int i = 0; i < buttonsList.length; i++) {
-      if (buttonsList[i].text == '') {
-        hasWinner = 'T';
-      } else {
-        hasWinner = '';
-      }
-    }
+    // for (int i = 0; i < buttonsList.length; i++) {
+    //   if (buttonsList[i].text == '') {
+    //     hasWinner = 'T';
+    //   } else {
+    //     hasWinner = '';
+    //   }
+    // }
 
     return hasWinner;
   }
