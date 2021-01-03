@@ -230,25 +230,25 @@ class _AutoGamePageState extends State<AutoGamePage> {
   }
 
   int playAi(List<GameButton> buttonsList, List<int> availableSpace) {
-    int niceMove = bestMove(buttonsList, availableSpace);
+    int niceMove = bestMove(buttonsList);
     // print(availableSpace);
     // print(niceMove);
     return niceMove;
   }
 
-  int bestMove(List<GameButton> buttons, List<int> available) {
+  int bestMove(List<GameButton> buttons) {
     var move = -1;
     int bestScore = -99;
-    for (int i = 0; i < available.length; i++) {
-      buttons[available[i]].text = 'O';
+    for (int i = 0; i <buttons.length ; i++) {
+      buttons[i].text = 'O';
       var score = miniMax(buttons, 0, false);
       print(score);
       if (score > bestScore) {
         bestScore = score;
         print(i);
-        move = available[i];
+        move = i;
       }
-      buttons[available[i]].text = '';
+      buttons[i].text = '';
       // available.remove(available[i]);
     }
     return move;
