@@ -216,7 +216,7 @@ class _AutoGamePageState extends State<AutoGamePage> {
         // int num = notPressed[random.nextInt(notPressed.length)];
         // buttonsList[num].text = 'O';
         // notPressed.remove(num);
-        var move = playAi(buttonsList, notPressed);
+        var move = playAi(buttonsList);
         print(move);
         buttonsList[move].text = 'O';
         notPressed.remove(move);
@@ -229,61 +229,9 @@ class _AutoGamePageState extends State<AutoGamePage> {
     setState(() {});
   }
 
-  int playAi(List<GameButton> buttonsList, List<int> availableSpace) {
-    int niceMove = bestMove(buttonsList);
-    // print(availableSpace);
-    // print(niceMove);
-    return niceMove;
-  }
 
-  int bestMove(List<GameButton> buttons) {
-    var move = -1;
-    int bestScore = -99;
-    for (int i = 0; i <buttons.length ; i++) {
-      buttons[i].text = 'O';
-      var score = miniMax(buttons, 0, false);
-      print(score);
-      if (score > bestScore) {
-        bestScore = score;
-        print(i);
-        move = i;
-      }
-      buttons[i].text = '';
-      // available.remove(available[i]);
-    }
-    return move;
-  }
+  playAi(List<GameButton> button){
 
-  int miniMax(List<GameButton> buttons, int depth, bool isMaximising) {
-    var scoreData = {'X': -1, 'O': 1, 'T': 0};
-    var winner = checkWinnerAi();
-    // print(winner);
-    if (winner != '') {
-      return scoreData[winner];
-    }
-    if (isMaximising) {
-      var bestScore = -190;
-      for (int i = 0; i < buttons.length; i++) {
-        if (buttons[i].text == '') {
-          buttons[i].text = 'O';
-          var score = miniMax(buttons, depth + 1, false);
-          buttons[i].text = '';
-          bestScore = score > bestScore ? score : bestScore;
-        }
-      }
-      return bestScore;
-    } else {
-      var bestScore = 190;
-      for (int i = 0; i < buttons.length; i++) {
-        if (buttons[i].text == '') {
-          buttons[i].text = 'X';
-          var score = miniMax(buttons, depth + 1, true);
-          buttons[i].text = '';
-          bestScore = score < bestScore ? score : bestScore;
-        }
-      }
-      return bestScore;
-    }
   }
 
   void resetGame() {
