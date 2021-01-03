@@ -229,9 +229,52 @@ class _AutoGamePageState extends State<AutoGamePage> {
     setState(() {});
   }
 
+  playAi(List<GameButton> button) {
+    int bestScore = -999;
+    var move = -1;
+    for (int i = 0; i < button.length; i++) {
+      if (button[i].text == '') {
+        button[i].text = 'O';
+        var score = miniMax(button, 0, false);
+        button[i].text = '';
+        if (score > bestScore) {
+          bestScore = score;
+          move = i;
+        }
+      }
+    }
+    return move;
+  }
 
-  playAi(List<GameButton> button){
-
+  miniMax(List<GameButton> buttons, int depth, bool isMaximising) {
+    var scoreData = {'X': -1, 'O': 1, 'T': 0};
+    var winner = checkWinnerAi();
+    if (winner != '') {
+      return scoreData[winner];
+    }
+    if (isMaximising) {
+      var bestScore = double.negativeInfinity;
+      for (int i = 0; i < buttons.length; i++) {
+        if (buttons[i].text == '') {
+          buttons[i].text = 'O';
+          var score = miniMax(buttons, depth + 1, true);
+          buttons[i].text = '';
+          bestScore = score > bestScore ? score : bestScore;
+        }
+      }
+      return bestScore;
+    } else {
+      var bestScore = double.negativeInfinity;
+      for (int i = 0; i < buttons.length; i++) {
+        if (buttons[i].text == '') {
+          buttons[i].text = 'O';
+          var score = miniMax(buttons, depth + 1, true);
+          buttons[i].text = '';
+          bestScore = score > bestScore ? score : bestScore;
+        }
+      }
+      return bestScore;
+    }
   }
 
   void resetGame() {
