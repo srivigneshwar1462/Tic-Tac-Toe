@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      // initialRoute: '/dummy',
+      initialRoute: '/autoGame',
       routes: {
         '/': (context) => HomePage(),
         '/autoGame': (context) => AutoGamePage(),

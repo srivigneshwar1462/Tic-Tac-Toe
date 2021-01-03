@@ -207,53 +207,83 @@ class _AutoGamePageState extends State<AutoGamePage> {
 
   void _tapped(int index) {
     if (buttonsList[index].text == '') {
-      setState(() {
-        buttonsList[index].text = 'X';
-        notPressed.remove(index);
+      buttonsList[index].text = 'X';
+      notPressed.remove(index);
+      timesPressed += 1;
+      // print(timesPressed);
+      if (notPressed.length > 1) {
+        // Random random = Random();
+        // int num = notPressed[random.nextInt(notPressed.length)];
+        // buttonsList[num].text = 'O';
+        // notPressed.remove(num);
+        var move = playAi(buttonsList, notPressed);
+        print(move);
+        buttonsList[move].text = 'O';
+        notPressed.remove(move);
         timesPressed += 1;
-        print(timesPressed);
-        if (notPressed.length > 1) {
-          // Random random = Random();
-          // int num = notPressed[random.nextInt(notPressed.length)];
-          // buttonsList[num].text = 'O';
-          // notPressed.remove(num);
-          var move = playAi(buttonsList, notPressed);
-          buttonsList[move].text = 'O';
-          notPressed.remove(buttonsList[move]);
-          timesPressed += 1;
-        }
-        // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
-
-        print(timesPressed);
-
-        checkWinnerMain();
-      });
+      }
+      // buttonsList[index].fontColor = player ? Colors.green : Colors.red;
+      // print(timesPressed);
+      checkWinnerMain();
     }
+    setState(() {});
   }
 
   int playAi(List<GameButton> buttonsList, List<int> availableSpace) {
-    List<GameButton> tempButtons = new List<GameButton>.from(buttonsList);
-    int niceMove = bestMove(tempButtons, availableSpace);
+    int niceMove = bestMove(buttonsList, availableSpace);
+    // print(availableSpace);
+    // print(niceMove);
     return niceMove;
   }
 
   int bestMove(List<GameButton> buttons, List<int> available) {
-    var move = 0;
-    double bestScore = double.negativeInfinity;
+    var move = -1;
+    int bestScore = -99;
     for (int i = 0; i < available.length; i++) {
       buttons[available[i]].text = 'O';
-      var score = miniMax(buttons);
+      var score = miniMax(buttons, 0, false);
+      print(score);
       if (score > bestScore) {
         bestScore = score;
+        print(i);
         move = available[i];
       }
+      buttons[available[i]].text = '';
+      // available.remove(available[i]);
     }
     return move;
   }
 
-  double miniMax(List<GameButton> buttons) {
-    return 1;
-
+  int miniMax(List<GameButton> buttons, int depth, bool isMaximising) {
+    var scoreData = {'X': -1, 'O': 1, 'T': 0};
+    var winner = checkWinnerAi();
+    // print(winner);
+    if (winner != '') {
+      return scoreData[winner];
+    }
+    if (isMaximising) {
+      var bestScore = -190;
+      for (int i = 0; i < buttons.length; i++) {
+        if (buttons[i].text == '') {
+          buttons[i].text = 'O';
+          var score = miniMax(buttons, depth + 1, false);
+          buttons[i].text = '';
+          bestScore = score > bestScore ? score : bestScore;
+        }
+      }
+      return bestScore;
+    } else {
+      var bestScore = 190;
+      for (int i = 0; i < buttons.length; i++) {
+        if (buttons[i].text == '') {
+          buttons[i].text = 'X';
+          var score = miniMax(buttons, depth + 1, true);
+          buttons[i].text = '';
+          bestScore = score < bestScore ? score : bestScore;
+        }
+      }
+      return bestScore;
+    }
   }
 
   void resetGame() {
@@ -447,14 +477,14 @@ class _AutoGamePageState extends State<AutoGamePage> {
     return winner;
   }
 
-  bool checkWinnerAi() {
-    bool hasWinner = false;
+  String checkWinnerAi() {
+    String hasWinner = '';
 
     //  row 1
     if (buttonsList[0].text == buttonsList[1].text &&
         buttonsList[0].text == buttonsList[2].text &&
         buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[0].text;
       return hasWinner;
     }
 
@@ -462,14 +492,16 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[3].text == buttonsList[4].text &&
         buttonsList[3].text == buttonsList[5].text &&
         buttonsList[3].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[3].text;
+
       return hasWinner;
     }
     // Row 3
     if (buttonsList[6].text == buttonsList[7].text &&
         buttonsList[6].text == buttonsList[8].text &&
         buttonsList[6].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[6].text;
+
       return hasWinner;
     }
 
@@ -477,7 +509,8 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[0].text == buttonsList[3].text &&
         buttonsList[0].text == buttonsList[6].text &&
         buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[0].text;
+
       return hasWinner;
     }
 
@@ -485,15 +518,17 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[1].text == buttonsList[4].text &&
         buttonsList[1].text == buttonsList[7].text &&
         buttonsList[1].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[1].text;
+
       return hasWinner;
     }
 
-    // Column 2
+    // Column 3
     if (buttonsList[2].text == buttonsList[5].text &&
         buttonsList[2].text == buttonsList[8].text &&
         buttonsList[2].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[2].text;
+
       return hasWinner;
     }
 
@@ -501,7 +536,8 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[0].text == buttonsList[4].text &&
         buttonsList[0].text == buttonsList[8].text &&
         buttonsList[0].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[0].text;
+
       return hasWinner;
     }
 
@@ -509,8 +545,17 @@ class _AutoGamePageState extends State<AutoGamePage> {
     if (buttonsList[2].text == buttonsList[4].text &&
         buttonsList[2].text == buttonsList[6].text &&
         buttonsList[2].text != '') {
-      hasWinner = buttonsList[0].text == 'O' ? true : false;
+      hasWinner = buttonsList[2].text;
+
       return hasWinner;
+    }
+
+    for (int i = 0; i < buttonsList.length; i++) {
+      if (buttonsList[i].text == '') {
+        hasWinner = 'T';
+      } else {
+        hasWinner = '';
+      }
     }
 
     return hasWinner;
